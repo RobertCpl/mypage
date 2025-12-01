@@ -109,4 +109,10 @@ Projekt zakłada kolorowe kafelki 2×2 (desktop) w stylu z załączonego zrzutu 
   - Zaimportować `Services` w `newstack/app/page.tsx`.
   - Umieścić sekcję pod `About`, tak aby kolejność sekcji była: `Hero` → `About` → `Services` → (kolejne sekcje, jeśli występują).
 
+## Sekcja Blog – uwagi techniczne
+
+- Sekcja `Blog` jest zaimplementowana jako komponent `Blog` w `newstack/components/blog.tsx`, korzystający z tego samego kontenera (`max-w-[1200px]`, `px-4`, `py-16 lg:py-20`) i tokenów kolorów co `Services`/`About`.
+- Dane wpisów blogowych są obecnie trzymane lokalnie jako statyczna tablica typu `BlogPost` (id, title, category, imageSrc, slug, excerpt, publishedAt), dzięki czemu w przyszłości można łatwo podpiąć zewnętrzne API (np. Strapi) lub `@tanstack/react-query` bez zmiany struktury UI.
+- Każdy wpis prezentowany jest jako karta z obrazkiem (`next/image`), kategorią, tytułem i krótkim opisem; layout jest responsywny (1 kolumna na mobile, 2–3 kolumny na większych ekranach), spójny z resztą projektu.
+
 
