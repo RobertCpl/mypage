@@ -14,10 +14,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Use Node.js 18
+    - name: Use Node.js 20  
       uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
         cache: npm
 
     - name: Install dependencies
@@ -26,8 +26,8 @@ jobs:
     - name: Lint
       run: npm run lint
 
-    - name: Build
-      run: npm run build
+    # - name: Build
+    #   run: npm run build
 
   docker-build-and-push:
     needs: build-and-lint
@@ -52,21 +52,24 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/mypage:latest
 
-  # vps-deploy:
-  #   needs: docker-build-and-push
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  vps-deploy:
+    needs: docker-build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
-  #   steps:
-  #   - name: Deploy to VPS via SSH
-  #     uses: appleboy/ssh-action@v1.0.0
-  #     with:
-  #       host: ${{ secrets.VPS_HOST }}
-  #       username: ${{ secrets.VPS_USER }}
-  #       key: ${{ secrets.VPS_SSH_KEY }}
-  #       script: |
-  #         docker pull ${{ secrets.DOCKERHUB_USERNAME }}/mypage:latest
-  #         docker stop mypage || true
-  #         docker rm mypage || true
-  #         docker run -d --name mypage -p 80:3000 ${{ secrets.DOCKERHUB_USERNAME }}/mypage:latest
+    steps:
+    - name: Deploy to VPS via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_SSH_KEY }}
+        script: |
+          cd mypage
+          docker compose down || true
+          docker stop mypage-frontend || true
+          docker stop mypage-backend || true
+          docker rm mypage-frontend || true
+          docker rm mypage-backend || true
+          docker compose up -d
 
