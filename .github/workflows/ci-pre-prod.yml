@@ -53,4 +53,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mypage:pre-prod
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mypage-frontend:pre-prod

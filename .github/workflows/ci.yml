@@ -50,7 +50,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/mypage:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/mypage-frontend:latest
 
   vps-deploy:
     needs: docker-build-and-push
@@ -65,11 +65,12 @@ jobs:
         username: ${{ secrets.VPS_USER }}
         key: ${{ secrets.VPS_SSH_KEY }}
         script: |
-          cd mypage
-          docker compose down || true
-          docker stop mypage-frontend || true
-          docker stop mypage-backend || true
-          docker rm mypage-frontend || true
-          docker rm mypage-backend || true
-          docker compose up -d
+          cd mypage 
+          docker rm -f mypage-frontend || true
+          docker run -d --name mypage-frontend \
+          --pull=always \
+          --restart=always \
+          --network nginx-setup_internal-net \
+          --env-file .env.frontend \
+          ${{ secrets.DOCKERHUB_USERNAME }}/mypage-frontend:latest
 

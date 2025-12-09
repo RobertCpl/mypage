@@ -6,11 +6,14 @@ services:
     pull_policy: always
     container_name: mypage-frontend
     env_file:
-      - .env.production
+      - .env.frontend
     ports:
       - "127.0.0.1:3000:3000"
     restart: unless-stopped
     networks:
-      - internal-net
+      - nginx-setup_internal-net
 
-
+networks:
+  nginx-setup_internal-net:
+    external: true
+    name: nginx-setup_internal-net
