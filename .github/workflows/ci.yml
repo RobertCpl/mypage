@@ -70,7 +70,7 @@ jobs:
           docker run -d --name mypage-frontend \
           --pull=always \
           --restart=always \
-          --network nginx-setup_internal-net \
+          --network nginx-proxy_internal-net \
           --env-file .env.frontend \
           ${{ secrets.DOCKERHUB_USERNAME }}/mypage-frontend:latest
 
