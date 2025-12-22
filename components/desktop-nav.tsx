@@ -17,7 +17,7 @@ export function DesktopNav() {
     <NavigationMenu>
       <NavigationMenuList>
         {mainNavItems.map((item) => (
-          <NavigationMenuItem key={item.id}>
+          <NavigationMenuItem key={item.href}>
             <NavigationMenuLink
               asChild
               className={cn(
@@ -25,10 +25,7 @@ export function DesktopNav() {
                 "bg-transparent hover:bg-transparent focus:bg-transparent"
               )}
             >
-              <Link
-                href={`#${item.id}`}
-                className="hover:text-red-600!"
-              >
+              <Link href={item.href} className="hover:text-red-600!">
                 {item.label}
               </Link>
             </NavigationMenuLink>

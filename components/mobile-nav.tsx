@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -21,15 +22,31 @@ function scrollToSection(id: string) {
   }
 }
 
+function sectionIdFromHref(href: string) {
+  // expects "/#section"
+  const idx = href.indexOf("/#");
+  if (idx === -1) return null;
+  const id = href.slice(idx + 2);
+  return id.length > 0 ? id : null;
+}
+
 export function MobileNav() {
   const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const handleLinkClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
+    href: string,
   ) => {
-    event.preventDefault();
-    scrollToSection(id);
+    const sectionId = sectionIdFromHref(href);
+    if (isHome && sectionId) {
+      event.preventDefault();
+      scrollToSection(sectionId);
+      setOpen(false);
+      return;
+    }
+
     setOpen(false);
   };
 
@@ -51,9 +68,9 @@ export function MobileNav() {
         <nav className="mt-6 mb-6 flex flex-col items-center gap-4 text-center">
           {mainNavItems.map((item) => (
             <Link
-              key={item.id}
-              href={`#${item.id}`}
-              onClick={(event) => handleLinkClick(event, item.id)}
+              key={item.href}
+              href={item.href}
+              onClick={(event) => handleLinkClick(event, item.href)}
               className="text-lg font-medium"
             >
               {item.label}

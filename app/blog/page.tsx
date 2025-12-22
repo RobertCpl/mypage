@@ -3,30 +3,31 @@ import Link from "next/link";
 
 import { getAllPosts } from "@/lib/blog";
 
-export async function Blog() {
-  const posts = await getAllPosts({ limit: 3 });
-  return (
-    <section
-      id="blog"
-      className="flex w-full justify-center bg-background"
-      aria-labelledby="blog-heading"
-    >
-      <div className="mx-auto w-full max-w-[1200px] px-4 py-16 lg:py-20">
-        <div className="mb-12 space-y-3 text-center">
-          
-          <h2
-            id="blog-heading"
-            className="text-2xl font-semibold tracking-tight md:text-3xl"
-          >
-            Ostatnie wpisy
-          </h2>
-          <p className="mx-auto max-w-[640px] text-sm leading-relaxed text-muted-foreground md:text-base">
-            Dzielę się praktycznymi doświadczeniami z projektów – od
-            architektury aplikacji, przez wdrożenia, aż po długoterminowe
-            utrzymanie systemów.
-          </p>
-        </div>
+export const metadata = {
+  title: "Blog",
+  description: "Wpisy o budowaniu aplikacji, wdrożeniach i utrzymaniu.",
+};
 
+export default async function BlogIndexPage() {
+  const posts = await getAllPosts();
+
+  return (
+    <main className="mx-auto w-full max-w-[1200px] px-4 py-12 md:py-16">
+      <header className="mb-10 space-y-3 text-center">
+        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
+          Blog
+        </h1>
+        <p className="mx-auto max-w-[680px] text-sm leading-relaxed text-muted-foreground md:text-base">
+          Praktyczne doświadczenia z projektów – architektura, wdrożenia, DevOps i
+          długoterminowe utrzymanie.
+        </p>
+      </header>
+
+      {posts.length === 0 ? (
+        <p className="text-center text-sm text-muted-foreground">
+          Brak wpisów.
+        </p>
+      ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <article
@@ -50,14 +51,14 @@ export async function Blog() {
                 <p className="text-xs font-semibold uppercase tracking-wide text-[#ff5f45]">
                   {post.category}
                 </p>
-                <h3 className="text-lg font-semibold leading-snug md:text-xl">
+                <h2 className="text-lg font-semibold leading-snug md:text-xl">
                   <Link
                     href={`/blog/${post.slug}`}
                     className="transition-colors hover:text-foreground/80"
                   >
                     {post.title}
                   </Link>
-                </h3>
+                </h2>
                 <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
                   {post.excerpt}
                 </p>
@@ -65,8 +66,8 @@ export async function Blog() {
             </article>
           ))}
         </div>
-      </div>
-    </section>
+      )}
+    </main>
   );
 }
 

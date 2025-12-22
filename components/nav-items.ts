@@ -1,15 +1,15 @@
 export type NavItem = {
   label: string;
-  id: string;
+  href: string;
 };
 
 export const mainNavItems: NavItem[] = [
-  { label: "Home", id: "home" },
-  { label: "O mnie", id: "about" },
-  // { label: "Portfolio", id: "portfolio" },
-  { label: "Usługi", id: "services" },
-  { label: "Kontakt", id: "contact" },
-  // { label: "Blog", id: "blog" },
+  { label: "Home", href: "/#home" },
+  { label: "O mnie", href: "/#about" },
+  // { label: "Portfolio", href: "/#portfolio" },
+  { label: "Usługi", href: "/#services" },
+  { label: "Kontakt", href: "/#contact" },
+  { label: "Blog", href: "/blog" },
 ];
 
 
