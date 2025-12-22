@@ -31,7 +31,7 @@ Architektura to nie „wielkie diagramy”, tylko **zbiór decyzji**, które det
 
 ## Checklist na koniec
 
-![Schemat modularnej architektury aplikacji](/images/posts/modularna-architektura.png)
+![Schemat modularnej architektury aplikacji](/hero/background.jpg)
 
 
 - Czy łatwo znaleźć miejsce na nową funkcję?

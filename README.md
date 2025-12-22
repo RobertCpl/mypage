@@ -19,6 +19,16 @@ The main entry for the marketing page is `app/page.tsx`, which składa się z se
 - `Blog`
 - `ContactSection` (formularz kontaktowy)
 
+## Blog (Markdown)
+
+Blog jest oparty o pliki Markdown w repozytorium:
+
+- wpisy: `content/blog/*.md`
+- lista: `/blog`
+- pojedynczy wpis: `/blog/[slug]`
+
+Szczegóły (format frontmatter, obrazki, drafty, pliki w kodzie): `BLOG.md`.
+
 ## Formularz kontaktowy
 
 Sekcja kontaktowa znajduje się w:
